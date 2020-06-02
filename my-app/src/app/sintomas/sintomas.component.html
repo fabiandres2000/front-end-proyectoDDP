@@ -1,0 +1,101 @@
+<!-- Button trigger modal -->
+  <div class="text-center container">
+    <br />
+    <hr />
+    <h1 class="text-center"> Lista de sintomas</h1>
+    <hr />
+    <br />
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Registrar Nuevo Sintoma
+        </button>
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" name="filterPost" placeholder="Buscar por sintoma..." value="" [(ngModel)]="filterPost" />
+      </div>
+      <div class="col">
+        <form class="form-inline" [formGroup]="MiForm" (submit)="onDelete(MiForm.value)">
+          <input type="text" class="orm-control mr-sm-2" formControlName="Codigo" id="Codigo" placeholder="Codigo Del Sintoma">
+          <button type="submit" class="btn btn-danger">
+            <span>
+              <svg class="bi bi-box-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M11.646 11.354a.5.5 0 0 1 0-.708L14.293 8l-2.647-2.646a.5.5 0 0 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z" />
+                <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z" />
+                <path fill-rule="evenodd" d="M2 13.5A1.5 1.5 0 0 1 .5 12V4A1.5 1.5 0 0 1 2 2.5h7A1.5 1.5 0 0 1 10.5 4v1.5a.5.5 0 0 1-1 0V4a.5.5 0 0 0-.5-.5H2a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-1.5a.5.5 0 0 1 1 0V12A1.5 1.5 0 0 1 9 13.5H2z" />
+              </svg>
+            </span> Eliminar
+          </button>
+        </form>
+        </div>
+      </div>
+    </div>
+
+
+    <br />
+    <div class="text-center container">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Codigo</th>
+            <th scope="col">Descripcion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let elemento of sintomas | filterSintoma:filterPost  | paginate: { itemsPerPage: 5, currentPage: p } ; index as i">
+            <td> {{i+1}} </td>
+            <td> {{elemento.codigo}} </td>
+            <td> {{elemento.descripcion}} </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <br />
+      <br />
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Registro de sintoma</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="MiForm2" (submit)="onSubmit(MiForm2.value)">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="codigo">Codigo</label>
+                  <input type="text" class="form-control" formControlName="codigo" id="codigo">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="descripcion">Descripcion</label>
+                  <input type="text" class="form-control" formControlName="descripcion" id="descripcion">
+                </div>
+              </div>
+              <br />
+              <div class="text-center container">
+                <button type="submit" class="btn btn-primary">
+                  <span>
+                    <svg class="bi bi-box-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M11.646 11.354a.5.5 0 0 1 0-.708L14.293 8l-2.647-2.646a.5.5 0 0 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z" />
+                      <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z" />
+                      <path fill-rule="evenodd" d="M2 13.5A1.5 1.5 0 0 1 .5 12V4A1.5 1.5 0 0 1 2 2.5h7A1.5 1.5 0 0 1 10.5 4v1.5a.5.5 0 0 1-1 0V4a.5.5 0 0 0-.5-.5H2a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-1.5a.5.5 0 0 1 1 0V12A1.5 1.5 0 0 1 9 13.5H2z" />
+                    </svg>
+                  </span> Guardar
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
